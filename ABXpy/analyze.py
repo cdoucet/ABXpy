@@ -39,13 +39,8 @@ import argparse
 import os.path as path
 import os
 import warnings
-import sys
-from imp import reload
 
 from ABXpy.misc.type_fitting import fit_integer_type
-
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 
 def npdecode(keys, max_ind):
@@ -164,7 +159,7 @@ def analyze(task_file, score_file, result_file):
         the file that will contain the analysis results
 
     """
-    with open(result_file, 'w+') as fid:
+    with open(result_file, 'w+', encoding='utf8') as fid:
         taskfid = h5py.File(task_file)
         aux = taskfid['regressors']
         tfrk = aux[aux.keys()[0]]
