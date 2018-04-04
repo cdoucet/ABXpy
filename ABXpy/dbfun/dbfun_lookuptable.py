@@ -19,8 +19,7 @@ import os
 import sys
 import operator
 import collections
-from builtins import str
-
+from past.builtins import basestring
 import h5py
 import numpy
 
@@ -426,7 +425,7 @@ class DBfun_LookupTable(dbfun.DBfun):
 def get_dtype(data):
     str_dtype = h5py.special_dtype(vlen=str)
     # allow for the use of strings
-    if isinstance(data[0], str) or isinstance(data[0], str):
+    if isinstance(data[0], basestring):
         dtype = str_dtype
     # could add some checks that the dtype is one of those supported by h5 ?
     elif hasattr(data, 'dtype'):
