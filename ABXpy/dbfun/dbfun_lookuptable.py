@@ -62,10 +62,10 @@ class DBfun_LookupTable(dbfun.DBfun):
                 f.attrs['is_sorted'] = False
                 f.attrs['indexed'] = indexed
                 if not(code is None):
-                    f.attrs['code'] = str(code)
+                    f.attrs['code'] = unicode(code)
                 # synopsis
                 # h5 dtype for storing variable length strings
-                str_dtype = h5py.special_dtype(vlen=str)
+                str_dtype = h5py.special_dtype(vlen=unicode)
                 g = f.create_group('synopsis')
                 g.create_dataset(
                     'in_names', data=synopsis['in_names'], dtype=str_dtype)
@@ -422,7 +422,7 @@ class DBfun_LookupTable(dbfun.DBfun):
 # efficient in general to index string outputs, it's actually mandatory
 # because determining chunk_size would fail for non-indexed strings
 def get_dtype(data):
-    str_dtype = h5py.special_dtype(vlen=str)
+    str_dtype = h5py.special_dtype(vlen=unicode)
     # allow for the use of strings
     if isinstance(data[0], basestring):
         dtype = str_dtype
