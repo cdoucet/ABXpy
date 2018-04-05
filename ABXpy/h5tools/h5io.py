@@ -94,36 +94,35 @@ class H5IO(object):
                 # h5 dtype for storing variable length strings
                 str_dtype = h5py.special_dtype(vlen=str)
                 g.create_dataset(
-                    'managed_datasets', data=np.array(datasets, dtype=object), dtype=str_dtype)
-
+                    'managed_datasets', data=datasets, dtype=str_dtype)
                 raw_datasets = list(set(datasets).difference(indexed_datasets))
                 if raw_datasets:
                     g.create_dataset(
-                        'raw_datasets', data=np.array(raw_datasets, dtype=object), dtype=str_dtype)
+                        'raw_datasets', data=raw_datasets, dtype=str_dtype)
                 # indexed datasets
                 if indexed_datasets:
                     g.create_dataset(
-                        'indexed_datasets', data=np.array(list(indexed_datasets), dtype='S'), dtype=str_dtype)
+                        'indexed_datasets', data=indexed_datasets, dtype=str_dtype)
                     g.create_dataset(
-                        'indexed_datasets_indexes', data=np.array(list(indexed_datasets_indexes), dtype=object), dtype=str_dtype)
+                        'indexed_datasets_indexes', data=indexed_datasets_indexes, dtype=str_dtype)
                     index_group = g.create_group('indexes')
                     for key, value in iteritems(indexes):
                         index_group.create_dataset(
-                            key, data=np.array(value, dtype=object), dtype=get_dtype(value))
+                            key, data=value, dtype=get_dtype(value))
                     non_fused = [
                         dset for dset in indexed_datasets if not(dset in all_fused_dsets)]
                     if non_fused:
                         g.create_dataset(
-                            'non_fused_datasets', data=np.array(non_fused, dtype=object), dtype=str_dtype)
+                            'non_fused_datasets', data=non_fused, dtype=str_dtype)
                 # fused datasets
                 if fused:
                     g.create_dataset(
-                        'fused_datasets', data=np.array(fused.keys(), dtype=object), dtype=str_dtype)
+                        'fused_datasets', data=fused.keys(), dtype=str_dtype)
                     h = g.create_group('fused')
                     for name, fused_dsets in iteritems(fused):
                         i = h.create_group(name)
                         i.create_dataset(
-                            'datasets', data=np.array(fused_dsets, dtype=object), dtype=str_dtype)
+                            'datasets', data=fused_dsets, dtype=str_dtype)
                         nb_levels = [len(indexes[indexed_datasets_indexes[
                                          indexed_datasets.index(dset)]]) for dset in fused_dsets]
                         i.create_dataset(
