@@ -39,6 +39,8 @@ import argparse
 import os.path as path
 import os
 import warnings
+from io import open
+
 
 from ABXpy.misc.type_fitting import fit_integer_type
 
